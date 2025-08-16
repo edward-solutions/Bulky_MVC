@@ -5,8 +5,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ApplicationDbContext>(options => 
+
+//Test Server
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//Production
+//builder.Services.AddDbContext<ProductionDbContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("Production")));
 
 var app = builder.Build();
 
