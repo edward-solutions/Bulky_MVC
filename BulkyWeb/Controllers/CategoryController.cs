@@ -25,7 +25,7 @@ namespace BulkyWeb.Controllers
         [HttpPost]
         public IActionResult Create(Category obj)
         {
-            if(obj.Name == obj.DisplayOrder.ToString())
+            if (obj.Name == obj.DisplayOrder.ToString())
             {
                 ModelState.AddModelError("Name", "Display order cannot exactly match the name");
             }
@@ -40,7 +40,7 @@ namespace BulkyWeb.Controllers
 
         public IActionResult Edit(int? id)
         {
-            if(id == null || id == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
@@ -64,6 +64,33 @@ namespace BulkyWeb.Controllers
                 return RedirectToAction("Index", "Category");
             }
             return View();
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            Category? category = _db.Categories.FirstOrDefault(x => x.Id == id); //FirstOrDefault could also work for other properties
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return View(category);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePOST(int? id)
+        {
+            Category? categoryObj = _db.Categories.FirstOrDefault(x => x.Id == id);
+            if (categoryObj == null)
+            {
+                return NotFound();
+            }
+            _db.Categories.Remove(categoryObj);
+            _db.SaveChanges();
+            return RedirectToAction("Index", "Category");
         }
 
     }
