@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Bulky.DataAcess.Migrations
+namespace Bulky.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250816135159_SeedCategoryTable")]
-    partial class SeedCategoryTable
+    [Migration("20250821131835_AddCategoryToDbandSeed")]
+    partial class AddCategoryToDbandSeed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace Bulky.DataAcess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BulkyWeb.Models.Category", b =>
+            modelBuilder.Entity("Bulky.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -37,7 +37,8 @@ namespace Bulky.DataAcess.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
@@ -54,13 +55,25 @@ namespace Bulky.DataAcess.Migrations
                         {
                             Id = 2,
                             DisplayOrder = 2,
-                            Name = "Scifi"
+                            Name = "Adventure"
                         },
                         new
                         {
                             Id = 3,
                             DisplayOrder = 3,
-                            Name = "History"
+                            Name = "Animation"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DisplayOrder = 4,
+                            Name = "Biography"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DisplayOrder = 5,
+                            Name = "Comedy"
                         });
                 });
 #pragma warning restore 612, 618
