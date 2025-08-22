@@ -1,3 +1,5 @@
+using Bulky.DataAccess.Repository;
+using Bulky.DataAccess.Repository.IRepository;
 using Bulky.DataAcess.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +11,8 @@ builder.Services.AddControllersWithViews();
 //Test Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 //Production
 //builder.Services.AddDbContext<ProductionDbContext>(options =>
