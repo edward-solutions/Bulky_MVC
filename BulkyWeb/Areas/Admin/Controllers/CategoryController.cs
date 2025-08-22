@@ -17,7 +17,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            List<Category> objCategoryList = _unitOfWork.Category.GetAll().ToList();
+            List<Category> objCategoryList = _unitOfWork.Categories.GetAll().ToList();
             return View(objCategoryList);
         }
 
@@ -35,7 +35,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             }
             if (ModelState.IsValid)
             {
-                _unitOfWork.Category.Add(obj);
+                _unitOfWork.Categories.Add(obj);
                 _unitOfWork.Save();
                 TempData["success"] = "Category created successfully.";
                 return RedirectToAction("Index", "Category");
@@ -51,7 +51,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             }
             //Category? category = _db.Categories.Find(id); Find only works for ID's
             //Category? category = _db.Categories.Where(x => x.Id == id).FirstOrDefault(); //Also possible to use Where()
-            Category? category = _unitOfWork.Category.Get(x => x.Id == id); //FirstOrDefault could also work for other properties
+            Category? category = _unitOfWork.Categories.Get(x => x.Id == id); //FirstOrDefault could also work for other properties
             if (category == null)
             {
                 return NotFound();
@@ -64,7 +64,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Category.Update(obj);
+                _unitOfWork.Categories.Update(obj);
                 _unitOfWork.Save();
                 TempData["success"] = "Category updated successfully.";
                 return RedirectToAction("Index", "Category");
@@ -78,7 +78,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            Category? category = _unitOfWork.Category.Get(x => x.Id == id); //FirstOrDefault could also work for other properties
+            Category? category = _unitOfWork.Categories.Get(x => x.Id == id); //FirstOrDefault could also work for other properties
             if (category == null)
             {
                 return NotFound();
@@ -89,12 +89,12 @@ namespace BulkyWeb.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category? category = _unitOfWork.Category.Get(x => x.Id == id);
+            Category? category = _unitOfWork.Categories.Get(x => x.Id == id);
             if (category == null)
             {
                 return NotFound();
             }
-            _unitOfWork.Category.Remove(category);
+            _unitOfWork.Categories.Remove(category);
             _unitOfWork.Save();
             TempData["success"] = "Category deleted successfully.";
             return RedirectToAction("Index", "Category");

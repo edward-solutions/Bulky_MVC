@@ -13,6 +13,7 @@ namespace Bulky.DataAccess.Repository.IRepository
         IEnumerable<T> GetAll();
         T Get(Expression<Func<T, bool>> filter); //this is how we filter by LINQ to an entity
         void Add(T entity);
+        void Update(T entity);
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entityList); //for deleting multiple records at once
     }
