@@ -14,8 +14,78 @@ namespace BulkyWeb.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            List<Product> objCategoryList = _unitOfWork.Products.GetAll().ToList();
-            return View(objCategoryList);
+            List<Product> objProductList = _unitOfWork.Products.GetAll().ToList();
+            return View(objProductList);
+        }
+
+        [HttpPost]
+        public IActionResult Create(Product obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Products.Add(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Product created successfully.";
+                return RedirectToAction("Index", "Product");
+            }
+            return View();
+        }
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            //Product? Product = _db.Products.Find(id); Find only works for ID's
+            //Product? Product = _db.Products.Where(x => x.Id == id).FirstOrDefault(); //Also possible to use Where()
+            Product? Product = _unitOfWork.Products.Get(x => x.Id == id); //FirstOrDefault could also work for other properties
+            if (Product == null)
+            {
+                return NotFound();
+            }
+            return View(Product);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Product obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Products.Update(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Product updated successfully.";
+                return RedirectToAction("Index", "Product");
+            }
+            return View();
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            Product? Product = _unitOfWork.Products.Get(x => x.Id == id); //FirstOrDefault could also work for other properties
+            if (Product == null)
+            {
+                return NotFound();
+            }
+            return View(Product);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePOST(int? id)
+        {
+            Product? Product = _unitOfWork.Products.Get(x => x.Id == id);
+            if (Product == null)
+            {
+                return NotFound();
+            }
+            _unitOfWork.Products.Remove(Product);
+            _unitOfWork.Save();
+            TempData["success"] = "Product deleted successfully.";
+            return RedirectToAction("Index", "Product");
         }
     }
 }
