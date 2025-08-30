@@ -17,6 +17,10 @@ namespace BulkyWeb.Areas.Admin.Controllers
             List<Product> objProductList = _unitOfWork.Products.GetAll().ToList();
             return View(objProductList);
         }
+        public IActionResult Create()
+        {
+            return View();
+        }
 
         [HttpPost]
         public IActionResult Create(Product obj)
