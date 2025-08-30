@@ -8,7 +8,7 @@ namespace Bulky.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int CategoryId { get; set; }
         [Required]
         [MaxLength(30)]
         [DisplayName("Category Name")]

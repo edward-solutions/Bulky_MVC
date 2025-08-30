@@ -51,7 +51,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             }
             //Category? category = _db.Categories.Find(id); Find only works for ID's
             //Category? category = _db.Categories.Where(x => x.Id == id).FirstOrDefault(); //Also possible to use Where()
-            Category? category = _unitOfWork.Categories.Get(x => x.Id == id); //FirstOrDefault could also work for other properties
+            Category? category = _unitOfWork.Categories.Get(x => x.CategoryId == id); //FirstOrDefault could also work for other properties
             if (category == null)
             {
                 return NotFound();
@@ -78,7 +78,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            Category? category = _unitOfWork.Categories.Get(x => x.Id == id); //FirstOrDefault could also work for other properties
+            Category? category = _unitOfWork.Categories.Get(x => x.CategoryId == id); //FirstOrDefault could also work for other properties
             if (category == null)
             {
                 return NotFound();
@@ -89,7 +89,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category? category = _unitOfWork.Categories.Get(x => x.Id == id);
+            Category? category = _unitOfWork.Categories.Get(x => x.CategoryId == id);
             if (category == null)
             {
                 return NotFound();

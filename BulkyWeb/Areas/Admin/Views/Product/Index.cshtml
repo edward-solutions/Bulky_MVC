@@ -22,6 +22,7 @@
             <th>ISBN</th>
             <th>Price</th>
             <th>Author</th>
+            @* <th>Category</th> *@
             <th> </th>
             <th></th>
         </tr>
@@ -34,6 +35,7 @@
                 <td class="py-1 px-2">@obj.ISBN</td>
                 <td class="py-1 px-2">@obj.Price</td>
                 <td class="py-1 px-2">@obj.Author</td>
+                @* <td class="py-1 px-2">@obj.Category.Name</td> *@
                 <td class="text-end py-1 px-2">
                     <div class="btn-group btn-group-sm" role="group">
                         <a asp-controller="Product"

@@ -16,11 +16,11 @@ namespace Bulky.DataAcess.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
-                new Category { Id = 2, Name = "Adventure", DisplayOrder = 2 },
-                new Category { Id = 3, Name = "Animation", DisplayOrder = 3 },
-                new Category { Id = 4, Name = "Biography", DisplayOrder = 4 },
-                new Category { Id = 5, Name = "Comedy", DisplayOrder = 5 }
+                new Category { CategoryId = 1, Name = "Action", DisplayOrder = 1 },
+                new Category { CategoryId = 2, Name = "Adventure", DisplayOrder = 2 },
+                new Category { CategoryId = 3, Name = "Animation", DisplayOrder = 3 },
+                new Category { CategoryId = 4, Name = "Biography", DisplayOrder = 4 },
+                new Category { CategoryId = 5, Name = "Comedy", DisplayOrder = 5 }
             );
 
             modelBuilder.Entity<Product>().HasData(
