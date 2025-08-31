@@ -46,6 +46,15 @@
         <input asp-for="Price100" type="text" class="form-control" />
         <span asp-validation-for="Price100" class="text-danger"></span>
     </div>
+    <div class="mb-3 row">
+        <label asp-for="CategoryId" class="p-0">Category</label>
+        <select asp-for="CategoryId" asp-items="ViewBag.CategoryList" type="text" class="form-control form-select">
+            <option  selected>
+                None
+            </option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
     <div class="text-end">
         <a asp-controller="Product" asp-action="Index" class="btn btn-secondary btn-outline-dark form-control" style="width:150px">Back</a>
         <button type="submit" class="btn btn-primary form-control" style="width:150px">Save</button>
