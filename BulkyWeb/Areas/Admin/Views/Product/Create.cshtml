@@ -53,6 +53,11 @@
                 None
             </option>
         </select>
+        @* <select asp-for="CategoryId" asp-items="@ViewData["CategoryList"] as IEnumerable<SelectListItem>" type="text" class="form-control form-select">
+            <option selected>
+                None
+            </option>
+        </select> *@
         <span asp-validation-for="CategoryId" class="text-danger"></span>
     </div>
     <div class="text-end">
