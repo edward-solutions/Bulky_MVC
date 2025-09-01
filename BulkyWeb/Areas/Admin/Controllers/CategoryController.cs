@@ -1,7 +1,7 @@
 ﻿using AspNetCoreGeneratedDocument;
 using Bulky.DataAccess.Repository;
 using Bulky.DataAccess.Repository.IRepository;
-using Bulky.DataAcess.Data;
+using Bulky.DataAccess.Data;
 using Bulky.Models;
 using Microsoft.AspNetCore.Mvc;
 
