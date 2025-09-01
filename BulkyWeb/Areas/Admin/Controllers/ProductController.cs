@@ -19,7 +19,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             List<Product> objProductList = _unitOfWork.Products.GetAll().ToList();
             return View(objProductList);
         }
-        public IActionResult Create()
+        public IActionResult Upsert(int? id) //Update + Insert
         {
             IEnumerable<SelectListItem> categoryList = _unitOfWork.Categories.GetAll().ToList().Select(u => new SelectListItem
             {
@@ -34,13 +34,23 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 Product = new(),
                 CategoryList = categoryList
             };
-            return View(productVM);
+            if (id == null || id == 0)
+            {
+                //create
+                return View(productVM);
+            }
+            else
+            {
+                //update
+                productVM.Product = _unitOfWork.Products.Get(x => x.Id == id);
+                return View(productVM);
+            }
         }
 
         [HttpPost]
-        public IActionResult Create(ProductVM productVM)
+        public IActionResult Upsert(ProductVM productVM, IFormFile? file)
         {
-            if (ModelState.IsValid && productVM.Product != null)
+            if (ModelState.IsValid)
             {
                 _unitOfWork.Products.Add(productVM.Product);
                 _unitOfWork.Save();
@@ -56,22 +66,6 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 });
                 return View(productVM);
             }
-        }
-
-        public IActionResult Edit(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            //Product? Product = _db.Products.Find(id); Find only works for ID's
-            //Product? Product = _db.Products.Where(x => x.Id == id).FirstOrDefault(); //Also possible to use Where()
-            Product? Product = _unitOfWork.Products.Get(x => x.Id == id); //FirstOrDefault could also work for other properties
-            if (Product == null)
-            {
-                return NotFound();
-            }
-            return View(Product);
         }
 
         [HttpPost]
