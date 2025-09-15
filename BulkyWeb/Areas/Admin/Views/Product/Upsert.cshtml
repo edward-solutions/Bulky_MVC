@@ -1,7 +1,8 @@
 ﻿@model ProductVM
 
 <form method="post" enctype="multipart/form-data">
-    @* <input asp-for="Product.Id" hidden /> *@
+    <input asp-for="Product.Id" hidden /> 
+    <input asp-for="Product.ImageUrl" hidden /> 
     <div class="border p-3 mt-4">
         <h2 class="text-primary">@(Model.Product.Id !=0  ? "Update" : "Create") Product</h2>
         <hr />
@@ -61,11 +62,6 @@
                         None
                     </option>
                 </select>
-                @* <select asp-for="CategoryId" asp-items="@ViewData["CategoryList"] as IEnumerable<SelectListItem>" type="text" class="form-control form-select">
-            <option selected>
-                None
-            </option>
-        </select> *@
                 <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
             </div>
             <div class="text-end">
