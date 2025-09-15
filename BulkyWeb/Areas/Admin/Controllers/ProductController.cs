@@ -10,13 +10,15 @@ namespace BulkyWeb.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWOrk _unitOfWork;
-        public ProductController(IUnitOfWOrk unitOfWork)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ProductController(IUnitOfWOrk unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
-            List<Product> objProductList = _unitOfWork.Products.GetAll().ToList();
+            List<Product> objProductList = _unitOfWork.Products.GetAll(includeProperties: "Category").ToList();
             return View(objProductList);
         }
         public IActionResult Upsert(int? id) //Update + Insert
@@ -52,6 +54,19 @@ namespace BulkyWeb.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if(file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"images\product");
+
+                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    productVM.Product.ImageUrl = @"images\product\" + fileName;
+                }
                 _unitOfWork.Products.Add(productVM.Product);
                 _unitOfWork.Save();
                 TempData["success"] = "Product created successfully.";
