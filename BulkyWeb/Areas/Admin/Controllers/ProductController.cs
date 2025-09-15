@@ -58,14 +58,14 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 if(file != null)
                 {
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    string productPath = Path.Combine(wwwRootPath, @"images\product");
+                    string productPath = Path.Combine(wwwRootPath, @"images/product");
 
                     using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
                     {
                         file.CopyTo(fileStream);
                     }
 
-                    productVM.Product.ImageUrl = @"images\product\" + fileName;
+                    productVM.Product.ImageUrl = @"/images/product/" + fileName;
                 }
                 _unitOfWork.Products.Add(productVM.Product);
                 _unitOfWork.Save();
