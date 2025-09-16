@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Bulky.DataAccess.Repository
 {
-    public class UnitOfWork : IUnitOfWOrk
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _db;
         public IRepository<Category> Categories { get;  private set; }
