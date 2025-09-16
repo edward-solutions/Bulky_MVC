@@ -21,7 +21,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             List<Product> objProductList = _unitOfWork.Products.GetAll(includeProperties: "Category").ToList();
             return View(objProductList);
         }
-        public IActionResult Upsert(int? id) 
+        public IActionResult Upsert(int? id)
         {
             IEnumerable<SelectListItem> categoryList = _unitOfWork.Categories.GetAll().ToList().Select(u => new SelectListItem
             {
@@ -60,7 +60,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
                     {
                         var oldImagePath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('/'));
 
-                        if(System.IO.File.Exists(oldImagePath))
+                        if (System.IO.File.Exists(oldImagePath))
                         {
                             System.IO.File.Delete(oldImagePath);
 
@@ -89,7 +89,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             }
             else
             {
-                productVM.CategoryList  = _unitOfWork.Categories.GetAll().ToList().Select(u => new SelectListItem
+                productVM.CategoryList = _unitOfWork.Categories.GetAll().ToList().Select(u => new SelectListItem
                 {
                     Text = u.Name,
                     Value = u.CategoryId.ToString()
@@ -109,20 +109,6 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 return RedirectToAction("Index", "Product");
             }
             return View();
-        }
-
-        public IActionResult Delete(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            Product? Product = _unitOfWork.Products.Get(x => x.Id == id); 
-            if (Product == null)
-            {
-                return NotFound();
-            }
-            return View(Product);
         }
 
         [HttpPost, ActionName("Delete")]
@@ -145,6 +131,28 @@ namespace BulkyWeb.Areas.Admin.Controllers
         {
             List<Product> objProductList = _unitOfWork.Products.GetAll(includeProperties: "Category").ToList();
             return Json(new { data = objProductList });
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            var productToBeDeleted = _unitOfWork.Products.Get(x => x.Id == id);
+            if (productToBeDeleted == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, productToBeDeleted.ImageUrl.TrimStart('/'));
+
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            _unitOfWork.Products.Remove(productToBeDeleted);
+            _unitOfWork.Save();
+
+            return Json(new { success = true, message = "Delete Success" });
         }
         #endregion
     }
