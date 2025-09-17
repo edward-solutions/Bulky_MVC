@@ -6,38 +6,34 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
-        ajax: { url: '/admin/product/getall' },
-        columns:
-            [
-                { data: 'title', width: "30%" },
-                { data: 'isbn', width: "15%" },
-                { data: 'listPrice', width: "10%", className: "text-end" },
-                { data: 'author', width: "15%" },
-                { data: 'category.name', width: "15%" },
-                {
-                    data: 'id',
-                    render: function (data) {
-                        return `
+        "ajax": { url: '/admin/product/getall' },
+        "columns": [
+            { "data": "title", "width": "30%" },
+            { "data": "isbn", "width": "15%" },
+            { "data": "listPrice", "width": "10%", "className": "text-end" },
+            { "data": "author", "width": "15%" },
+            { "data": "category.name", "width": "15%" },
+            {
+                "data": "id",
+                "render": function (data) {
+                    return `
                         <div class="d-flex justify-content-center gap-2">
-                            <a href="/admin/product/upsert?id=${data}" 
-                               class="btn btn-sm btn-primary d-flex align-items-center">
-                                <i class="bi bi-pencil-square me-1"></i> Edit
-                            </a>
-                            <a onClick="Delete('/admin/product/delete/${data}')"
-                               class="btn btn-sm btn-danger d-flex align-items-center">
-                                <i class="bi bi-trash-fill me-1"></i> Delete
+                            <a href="/admin/product/upsert?id=${data}" class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>               
+                            <a onClick=Delete('/admin/product/delete/${data}') class="btn btn-danger mx-2">
+                                <i class="bi bi-trash-fill"></i> Delete
                             </a>
                         </div>
                     `;
-                    },
-                    width: "15%",
-                    className: "text-center"
-                }
-            ],
-        responsive: true,
-        autoWidth: false
+                },
+                "width": "15%",
+                "className": "text-center"
+            }
+        ]
     });
 }
+
 
 function Delete(url) {
     Swal.fire({

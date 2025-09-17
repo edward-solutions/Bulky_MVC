@@ -1,0 +1,32 @@
+﻿<div class="container">
+    <div class="row py-2">
+        <div class="col-6">
+            <h2 class="text-primary h5 m-0">Company List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Company" asp-action="Upsert" class="btn btn-sm btn-primary">
+                <i class="bi bi-plus-circle"></i> Create New
+            </a>
+        </div>
+    </div>
+</div>
+
+<table id="tblData" class="table table-bordered table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Phone Number</th>
+            <th class="text-end">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Rows will be injected by DataTables via company.js -->
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="~/js/company.js"></script>
+}

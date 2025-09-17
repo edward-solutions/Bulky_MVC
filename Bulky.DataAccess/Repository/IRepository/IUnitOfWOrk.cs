@@ -11,6 +11,7 @@ namespace Bulky.DataAccess.Repository.IRepository
     {
         IRepository<Category> Categories { get; }
         IRepository<Product> Products { get; }
+        IRepository<Company> Companies{ get; }
         void Save();
     }
 }
