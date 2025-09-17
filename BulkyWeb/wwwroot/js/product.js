@@ -5,18 +5,19 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
-      dataTable = $('#tblData').DataTable({
+    dataTable = $('#tblData').DataTable({
         ajax: { url: '/admin/product/getall' },
-        columns: [
-            { data: 'title', width: "30%" },
-            { data: 'isbn', width: "15%" },
-            { data: 'listPrice', width: "10%", className: "text-end" },
-            { data: 'author', width: "15%" },
-            { data: 'category.name', width: "15%" },
-            {
-                data: 'id',
-                render: function (data) {
-                    return `
+        columns:
+            [
+                { data: 'title', width: "30%" },
+                { data: 'isbn', width: "15%" },
+                { data: 'listPrice', width: "10%", className: "text-end" },
+                { data: 'author', width: "15%" },
+                { data: 'category.name', width: "15%" },
+                {
+                    data: 'id',
+                    render: function (data) {
+                        return `
                         <div class="d-flex justify-content-center gap-2">
                             <a href="/admin/product/upsert?id=${data}" 
                                class="btn btn-sm btn-primary d-flex align-items-center">
@@ -28,11 +29,11 @@ function loadDataTable() {
                             </a>
                         </div>
                     `;
-                },
-                width: "15%",
-                className: "text-center"
-            }
-        ],
+                    },
+                    width: "15%",
+                    className: "text-center"
+                }
+            ],
         responsive: true,
         autoWidth: false
     });
