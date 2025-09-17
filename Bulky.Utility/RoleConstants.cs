@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bulky.Utility
 {
-    public static class BulkyConstants
+    public static class RoleConstants
     {
         public const string Role_Customer = "Customer";
         public const string Role_Company = "Company";
