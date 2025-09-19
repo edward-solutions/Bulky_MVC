@@ -1,6 +1,8 @@
 using System.Diagnostics;
+using System.Security.Claims;
 using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BulkyWeb.Areas.Customer.Controllers
@@ -32,6 +34,31 @@ namespace BulkyWeb.Areas.Customer.Controllers
                 ProductId = productId
             };
             return View(shoppingCart);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            shoppingCart.ApplicationUserId = userId;
+
+            ShoppingCart cartFromDb = _unitOfWork.ShoppingCarts.Get(x => x.ApplicationUserId == userId && x.ProductId == shoppingCart.ProductId);
+
+            if(cartFromDb != null)
+            {
+                cartFromDb.Count += shoppingCart.Count;
+                _unitOfWork.ShoppingCarts.Update(cartFromDb);
+            }
+            else
+            {
+                _unitOfWork.ShoppingCarts.Update(shoppingCart);
+            }
+
+            _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()
