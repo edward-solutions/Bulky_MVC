@@ -19,5 +19,7 @@ namespace Bulky.Models
         [Range(1,1000, ErrorMessage = "Please enter a value between 1 and 1000!")]
         public int Count { get; set; }
         public string ApplicationUserId { get; set; }
+        [NotMapped]
+        public double Price { get; set; }
     }
 }
