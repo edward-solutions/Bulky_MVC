@@ -14,6 +14,8 @@ namespace Bulky.DataAccess.Repository.IRepository
         IRepository<Company> Companies{ get; }
         IRepository<ShoppingCart> ShoppingCarts { get; }
         IRepository<ApplicationUser> ApplicationUsers { get; }
+        IRepository<OrderHeader> OrderHeaders { get; }
+        IRepository<OrderDetail> OrderDetails { get; }
         void Save();
     }
 }
